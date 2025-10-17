@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Notes</h1>
+            <div class="header-actions" id="email-status-container" style="display: none;">
+                <span id="email-configured-text" class="email-status-text"></span>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="sidebar">
+                <button id="new-note-btn" class="btn btn-primary">+ New Note</button>
+                <div id="notes-list" class="notes-list">
+                    <!-- Notes will be loaded here -->
+                </div>
+            </div>
+
+            <div class="editor">
+                <div id="empty-state" class="empty-state">
+                    <p>Select a note or create a new one to get started</p>
+                </div>
+
+                <div id="note-editor" class="note-editor" style="display: none;">
+                    <input type="text" id="note-title" class="note-title" placeholder="Note title...">
+                    <textarea id="note-content" class="note-content" placeholder="Start writing..."></textarea>
+                    <div class="editor-actions">
+                        <button id="save-btn" class="btn btn-success">Save</button>
+                        <button id="delete-btn" class="btn btn-danger">Delete</button>
+                        <button id="email-btn" class="btn btn-info">Email Note</button>
+                        <button id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modal -->
+    <div id="email-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Email Note</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email-to">To:</label>
+                    <input type="email" id="email-to" class="form-input" placeholder="recipient@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="email-subject">Subject:</label>
+                    <input type="text" id="email-subject" class="form-input" placeholder="Note subject" required>
+                </div>
+                <div class="form-group">
+                    <label>Preview:</label>
+                    <div id="email-preview" class="email-preview"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="send-email-btn" class="btn btn-primary">Send Email</button>
+                <button id="cancel-email-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
