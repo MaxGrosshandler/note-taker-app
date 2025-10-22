@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+<!--
+  Notes App - Frontend HTML Structure
+
+  Single Page Application (SPA) for managing notes with email functionality.
+  Provides a two-pane layout with a sidebar for note navigation and a main editor area.
+
+  Structure:
+  - Header: Application title and email configuration status
+  - Sidebar: Note list with "New Note" button
+  - Editor: Form for creating/editing notes with action buttons
+  - Modal: Email composition dialog
+
+  Styling: Loaded from styles.css
+  Logic: Executed by app.js (loaded at end of body)
+
+  Accessibility:
+  - Semantic HTML5 structure
+  - Form inputs with labels
+  - Modal with proper ARIA attributes
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,29 +28,41 @@
 </head>
 <body>
     <div class="container">
+        <!-- ==================== HEADER ==================== -->
         <header>
             <h1>My Notes</h1>
+            <!-- Email configuration status indicator - shown only if email is configured -->
             <div class="header-actions" id="email-status-container" style="display: none;">
                 <span id="email-configured-text" class="email-status-text"></span>
             </div>
         </header>
 
+        <!-- ==================== MAIN CONTENT AREA ==================== -->
         <div class="content">
+            <!-- ==================== SIDEBAR ==================== -->
             <div class="sidebar">
+                <!-- Create new note button -->
                 <button id="new-note-btn" class="btn btn-primary">+ New Note</button>
+                <!-- Dynamic list of notes populated by app.js -->
                 <div id="notes-list" class="notes-list">
-                    <!-- Notes will be loaded here -->
+                    <!-- Notes will be loaded here by loadNotes() and renderNotesList() -->
                 </div>
             </div>
 
+            <!-- ==================== EDITOR PANE ==================== -->
             <div class="editor">
+                <!-- Empty state shown when no note is selected -->
                 <div id="empty-state" class="empty-state">
                     <p>Select a note or create a new one to get started</p>
                 </div>
 
+                <!-- Note editor form shown when a note is selected or created -->
                 <div id="note-editor" class="note-editor" style="display: none;">
+                    <!-- Note title input -->
                     <input type="text" id="note-title" class="note-title" placeholder="Note title...">
+                    <!-- Note content textarea -->
                     <textarea id="note-content" class="note-content" placeholder="Start writing..."></textarea>
+                    <!-- Action buttons -->
                     <div class="editor-actions">
                         <button id="save-btn" class="btn btn-success">Save</button>
                         <button id="delete-btn" class="btn btn-danger">Delete</button>
@@ -42,27 +74,35 @@
         </div>
     </div>
 
-    <!-- Email Modal -->
+    <!-- ==================== EMAIL MODAL DIALOG ==================== -->
+    <!-- Modal for composing and sending emails with note content -->
     <div id="email-modal" class="modal">
         <div class="modal-content">
+            <!-- Modal header with title and close button -->
             <div class="modal-header">
                 <h2>Email Note</h2>
+                <!-- Close button (X) - clicking it triggers closeEmailModal() -->
                 <span class="close">&times;</span>
             </div>
+            <!-- Modal body with email form -->
             <div class="modal-body">
+                <!-- Recipient email input -->
                 <div class="form-group">
                     <label for="email-to">To:</label>
                     <input type="email" id="email-to" class="form-input" placeholder="recipient@example.com" required>
                 </div>
+                <!-- Email subject input -->
                 <div class="form-group">
                     <label for="email-subject">Subject:</label>
                     <input type="text" id="email-subject" class="form-input" placeholder="Note subject" required>
                 </div>
+                <!-- Preview of note content to be sent -->
                 <div class="form-group">
                     <label>Preview:</label>
                     <div id="email-preview" class="email-preview"></div>
                 </div>
             </div>
+            <!-- Modal footer with action buttons -->
             <div class="modal-footer">
                 <button id="send-email-btn" class="btn btn-primary">Send Email</button>
                 <button id="cancel-email-btn" class="btn btn-secondary">Cancel</button>
@@ -70,6 +110,7 @@
         </div>
     </div>
 
+    <!-- Load client-side application logic -->
     <script src="app.js"></script>
 </body>
 </html>
