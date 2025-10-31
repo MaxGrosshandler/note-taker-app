@@ -3,7 +3,14 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(npm uninstall:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(dir:*)",
+      "Bash(del nul 2)",
+      "Bash(nul)",
+      "Bash(git rm:*)",
+      "Bash(del \"nul\")",
+      "Bash(cmd /c \"del nul\")",
+      "Bash(git clean:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,21 +1,77 @@
+/**
+ * Notes App - Frontend Stylesheet
+ *
+ * Provides complete visual styling for the Single Page Application (SPA).
+ * Defines layout, colors, animations, and responsive behavior.
+ *
+ * Color Palette:
+ *   Primary: #3498db (blue) - Main action elements
+ *   Header: #2c3e50 (dark blue-gray) - Top navigation
+ *   Success: #27ae60 (green) - Positive actions
+ *   Danger: #e74c3c (red) - Destructive actions
+ *   Secondary: #95a5a6 (gray) - Neutral elements
+ *   Borders/Dividers: #ecf0f1 (light gray)
+ *   Text: #333 (dark gray) - Primary text
+ *
+ * Layout Structure:
+ *   - Header: Fixed top bar with title and status
+ *   - Content: Flex container with sidebar and editor
+ *   - Sidebar: Fixed width list of notes with scrollbar
+ *   - Editor: Main content area with expandable textarea
+ *   - Modal: Overlay dialog for email composition
+ *
+ * Responsive Design:
+ *   - Two-pane layout optimized for desktop views
+ *   - Sidebar width: 300px (adjustable)
+ *   - Editor takes remaining space with flex: 1
+ */
+
+/**
+ * Global reset and box model configuration
+ * Ensures consistent margin/padding across all browsers
+ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/**
+ * Body element styling
+ * Sets default font stack, background color, and text color for the entire application
+ *
+ * Font Stack:
+ * - Uses system fonts for optimal performance and native appearance
+ * - Falls back to sans-serif if system fonts unavailable
+ * - Order: macOS (San Francisco), Windows (Segoe UI), Linux (Ubuntu/Roboto)
+ */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: #f5f5f5;
     color: #333;
 }
 
+/**
+ * Main container layout
+ * Fullscreen flex container that holds the entire application
+ * Uses flex-direction: column to stack header above content
+ */
 .container {
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
 
+/**
+ * Header styling
+ * Fixed top bar containing application title and email status
+ * Provides visual hierarchy and navigation context
+ *
+ * Layout:
+ * - Uses flex with space-between to position title left and status right
+ * - Full width with padding for breathing room
+ * - Subtle shadow for depth separation from content below
+ */
 header {
     background-color: #2c3e50;
     color: white;
@@ -26,17 +82,37 @@ header {
     align-items: center;
 }
 
+/**
+ * Header title styling
+ * Main application heading displayed in the header
+ * Sets clear visual hierarchy at the top of the interface
+ */
 header h1 {
     font-size: 1.5rem;
     font-weight: 600;
 }
 
+/**
+ * Header actions container
+ * Holds action buttons and status indicators in the header
+ * Positioned on the right side via header's space-between layout
+ */
 .header-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
+/**
+ * Email status indicator text
+ * Shows the configured Gmail address in the header
+ * Only visible when email functionality is configured
+ *
+ * Styling:
+ * - Semi-transparent background for subtle appearance
+ * - Reduced font size to not dominate the header
+ * - Uses rgba colors for consistent theming
+ */
 .email-status-text {
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.9);
@@ -45,12 +121,28 @@ header h1 {
     border-radius: 4px;
 }
 
+/**
+ * Main content area container
+ * Flex container that holds the sidebar and editor pane side-by-side
+ * Grows to fill remaining space below header
+ */
 .content {
     display: flex;
     flex: 1;
     overflow: hidden;
 }
 
+/**
+ * Sidebar panel styling
+ * Fixed width left panel containing the notes list
+ * Provides navigation and quick access to all notes
+ *
+ * Features:
+ * - Fixed 300px width for consistent navigation panel
+ * - Scrollable content area (overflow-y: auto handled by .notes-list)
+ * - Right border to separate from main editor
+ * - Flex column layout for vertical stacking of button and list
+ */
 .sidebar {
     width: 300px;
     background-color: #ecf0f1;
@@ -60,15 +152,40 @@ header h1 {
     padding: 1rem;
 }
 
+/**
+ * Create new note button styling
+ * Primary action button placed at the top of the sidebar
+ * Spans full width for clear call-to-action
+ */
 #new-note-btn {
     margin-bottom: 1rem;
 }
 
+/**
+ * Notes list container
+ * Scrollable area containing all note items
+ * Expands to fill remaining sidebar space
+ *
+ * Overflow handling:
+ * - overflow-y: auto for vertical scrolling when notes exceed height
+ * - flex: 1 makes it expand to fill available space
+ * - Custom scrollbar styling defined at end of file
+ */
 .notes-list {
     flex: 1;
     overflow-y: auto;
 }
 
+/**
+ * Individual note list item styling
+ * Each item represents one note that can be clicked to open
+ *
+ * Interaction:
+ * - Cursor changes to pointer on hover
+ * - Background color changes on hover for visual feedback
+ * - Smooth transition for all property changes
+ * - Active state (selected note) uses primary color
+ */
 .note-item {
     background-color: white;
     border: 1px solid #ddd;
@@ -79,17 +196,38 @@ header h1 {
     transition: all 0.2s;
 }
 
+/**
+ * Note item hover state
+ * Provides visual feedback when user hovers over a note
+ * Changes background and border color to indicate interactivity
+ */
 .note-item:hover {
     background-color: #f8f9fa;
     border-color: #3498db;
 }
 
+/**
+ * Active note item styling
+ * Applied to the currently selected note
+ * Uses primary blue color for clear visual emphasis
+ * White text ensures readability on colored background
+ */
 .note-item.active {
     background-color: #3498db;
     color: white;
     border-color: #3498db;
 }
 
+/**
+ * Note item title styling
+ * Displays the note title in the list item
+ * Text truncation prevents overflow in narrow sidebar
+ *
+ * Truncation:
+ * - white-space: nowrap prevents line wrapping
+ * - overflow: hidden clips overflowing text
+ * - text-overflow: ellipsis adds "..." for hidden content
+ */
 .note-item-title {
     font-weight: 600;
     margin-bottom: 0.25rem;
@@ -98,11 +236,21 @@ header h1 {
     white-space: nowrap;
 }
 
+/**
+ * Note item date/timestamp styling
+ * Shows when the note was last updated
+ * Uses reduced opacity for secondary information hierarchy
+ */
 .note-item-date {
     font-size: 0.75rem;
     opacity: 0.7;
 }
 
+/**
+ * Editor pane container
+ * Right side of the content area where notes are created/edited
+ * Takes up all remaining space after sidebar
+ */
 .editor {
     flex: 1;
     display: flex;
@@ -110,6 +258,12 @@ header h1 {
     background-color: white;
 }
 
+/**
+ * Empty state messaging
+ * Displayed when no note is selected
+ * Guides user to create or select a note
+ * Centered with neutral color for subtle appearance
+ */
 .empty-state {
     display: flex;
     align-items: center;
@@ -119,6 +273,11 @@ header h1 {
     font-size: 1.1rem;
 }
 
+/**
+ * Note editor form container
+ * Flex column layout for stacking title, content, and buttons vertically
+ * Takes full height of editor pane with generous padding
+ */
 .note-editor {
     display: flex;
     flex-direction: column;
@@ -126,6 +285,20 @@ header h1 {
     padding: 2rem;
 }
 
+/**
+ * Note title input field
+ * Large, prominent title input at the top of the editor
+ *
+ * Styling:
+ * - No border/outline for minimalist appearance
+ * - Bottom border provides visual focus indicator
+ * - Large font size (1.75rem) for hierarchy
+ * - Inherits font family from body
+ *
+ * Focus state:
+ * - Border color changes to primary blue
+ * - Provides clear visual feedback that field is active
+ */
 .note-title {
     font-size: 1.75rem;
     font-weight: 600;
@@ -136,10 +309,26 @@ header h1 {
     border-bottom: 2px solid #ecf0f1;
 }
 
+/**
+ * Note title focus state
+ * Changes border color to primary blue when focused
+ * Provides visual feedback for active input field
+ */
 .note-title:focus {
     border-bottom-color: #3498db;
 }
 
+/**
+ * Note content textarea
+ * Main content area that expands to fill available space
+ * Large, readable text for comfortable writing
+ *
+ * Layout:
+ * - flex: 1 makes it expand to fill remaining editor space
+ * - resize: none prevents user resizing (already flex)
+ * - Line height 1.6 for comfortable reading
+ * - Large font size (1rem) with good spacing
+ */
 .note-content {
     flex: 1;
     border: none;
@@ -151,6 +340,11 @@ header h1 {
     font-family: inherit;
 }
 
+/**
+ * Editor action buttons container
+ * Flex row layout for action buttons at the bottom of editor
+ * Separated from content by top border
+ */
 .editor-actions {
     display: flex;
     gap: 0.5rem;
@@ -158,6 +352,18 @@ header h1 {
     border-top: 1px solid #ecf0f1;
 }
 
+/**
+ * Base button styling
+ * Applied to all button variants
+ * Provides consistent appearance and interaction behavior
+ *
+ * Features:
+ * - Rounded corners for modern appearance
+ * - Smooth color transition on hover
+ * - Slight lift animation on hover (translateY)
+ * - Subtle shadow for depth
+ * - No border (solid color background)
+ */
 .btn {
     padding: 0.5rem 1.5rem;
     border: none;
@@ -168,58 +374,121 @@ header h1 {
     transition: all 0.2s;
 }
 
+/**
+ * Button hover state
+ * Applied to all button variants
+ * Lifts button slightly and adds shadow for interactive feedback
+ */
 .btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/**
+ * Primary button variant
+ * Used for main actions (create new note)
+ * Blue color with full width in sidebar context
+ */
 .btn-primary {
     background-color: #3498db;
     color: white;
     width: 100%;
 }
 
+/**
+ * Primary button hover state
+ * Darker blue on hover for clear visual feedback
+ */
 .btn-primary:hover {
     background-color: #2980b9;
 }
 
+/**
+ * Success button variant
+ * Used for positive actions (Save)
+ * Green color indicates successful/confirmatory action
+ */
 .btn-success {
     background-color: #27ae60;
     color: white;
 }
 
+/**
+ * Success button hover state
+ * Darker green on hover
+ */
 .btn-success:hover {
     background-color: #229954;
 }
 
+/**
+ * Danger button variant
+ * Used for destructive actions (Delete)
+ * Red color warns user of irreversible action
+ */
 .btn-danger {
     background-color: #e74c3c;
     color: white;
 }
 
+/**
+ * Danger button hover state
+ * Darker red on hover
+ */
 .btn-danger:hover {
     background-color: #c0392b;
 }
 
+/**
+ * Secondary button variant
+ * Used for neutral actions (Cancel)
+ * Gray color indicates non-primary action
+ */
 .btn-secondary {
     background-color: #95a5a6;
     color: white;
 }
 
+/**
+ * Secondary button hover state
+ * Darker gray on hover
+ */
 .btn-secondary:hover {
     background-color: #7f8c8d;
 }
 
+/**
+ * Info button variant
+ * Used for supplementary actions (Email Note)
+ * Blue color for informational/additional actions
+ */
 .btn-info {
     background-color: #3498db;
     color: white;
 }
 
+/**
+ * Info button hover state
+ * Darker blue on hover
+ */
 .btn-info:hover {
     background-color: #2980b9;
 }
 
-/* Modal styles */
+/**
+ * ==================== MODAL DIALOG STYLES ====================
+ * Styles for the email composition modal overlay and dialog
+ */
+
+/**
+ * Modal overlay background
+ * Fixed overlay covering entire viewport
+ * Semi-transparent dark background focuses attention on modal
+ *
+ * States:
+ * - display: none by default (hidden)
+ * - display: block when .show class is added (visible)
+ */
 .modal {
     display: none;
     position: fixed;
@@ -232,10 +501,25 @@ header h1 {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+/**
+ * Modal show state
+ * Applied via JavaScript to display the modal
+ * Changes display property to make overlay and dialog visible
+ */
 .modal.show {
     display: block;
 }
 
+/**
+ * Modal dialog box content
+ * White container with rounded corners and shadow
+ * Centered in viewport with smooth slide-in animation
+ *
+ * Animation:
+ * - Slides down from top with fade-in effect
+ * - Duration: 300ms, easing: ease-out
+ * - Creates smooth appearance when modal opens
+ */
 .modal-content {
     background-color: #fefefe;
     margin: 5% auto;
@@ -246,6 +530,11 @@ header h1 {
     animation: modalSlideIn 0.3s ease-out;
 }
 
+/**
+ * Modal slide-in animation keyframes
+ * Defines the motion from hidden to visible state
+ * Combines vertical translation with opacity for smooth appearance
+ */
 @keyframes modalSlideIn {
     from {
         transform: translateY(-50px);
@@ -257,6 +546,15 @@ header h1 {
     }
 }
 
+/**
+ * Modal header section
+ * Contains title and close button
+ * Separated from body by border for visual hierarchy
+ *
+ * Layout:
+ * - Flex with space-between to position title left, close button right
+ * - Top section of modal with slightly darker appearance
+ */
 .modal-header {
     padding: 1.5rem;
     border-bottom: 1px solid #ecf0f1;
@@ -265,12 +563,26 @@ header h1 {
     align-items: center;
 }
 
+/**
+ * Modal header title
+ * Main heading for the modal dialog
+ * Clear, large text identifies the modal purpose
+ */
 .modal-header h2 {
     margin: 0;
     color: #2c3e50;
     font-size: 1.5rem;
 }
 
+/**
+ * Modal close button (X)
+ * Appears in top-right corner of modal
+ * Semi-transparent gray that darkens on hover
+ *
+ * Interaction:
+ * - Color changes on hover/focus for clear interactivity
+ * - Smooth transition for color change
+ */
 .close {
     color: #95a5a6;
     font-size: 28px;
@@ -279,15 +591,34 @@ header h1 {
     transition: color 0.2s;
 }
 
+/**
+ * Close button hover/focus state
+ * Darkens the close button when hovered or focused
+ * Provides visual feedback for interactivity
+ */
 .close:hover,
 .close:focus {
     color: #2c3e50;
 }
 
+/**
+ * Modal body section
+ * Main content area of modal containing the form
+ * Padding provides spacing from edges
+ */
 .modal-body {
     padding: 1.5rem;
 }
 
+/**
+ * Modal footer section
+ * Contains action buttons at the bottom of modal
+ * Separated from body by top border for visual hierarchy
+ *
+ * Layout:
+ * - Flex with justify-content: flex-end positions buttons on right
+ * - Buttons stack horizontally with gap for spacing
+ */
 .modal-footer {
     padding: 1rem 1.5rem;
     border-top: 1px solid #ecf0f1;
@@ -296,10 +627,20 @@ header h1 {
     gap: 0.5rem;
 }
 
+/**
+ * Form group container
+ * Wraps form inputs with labels
+ * Provides vertical spacing between form fields
+ */
 .form-group {
     margin-bottom: 1.5rem;
 }
 
+/**
+ * Form input label
+ * Text label describing form field
+ * Small font weight and distinct color for hierarchy
+ */
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
@@ -307,6 +648,16 @@ header h1 {
     font-weight: 500;
 }
 
+/**
+ * Form input field styling
+ * Applied to email address and subject inputs
+ * Full width with border and rounded corners
+ *
+ * Focus state:
+ * - Border color changes to primary blue
+ * - Outline removed for custom focus styling
+ * - Smooth transition for visual feedback
+ */
 .form-input {
     width: 100%;
     padding: 0.75rem;
@@ -317,11 +668,27 @@ header h1 {
     transition: border-color 0.2s;
 }
 
+/**
+ * Form input focus state
+ * Changes border color to primary blue when focused
+ * Provides clear visual indication of active field
+ */
 .form-input:focus {
     outline: none;
     border-color: #3498db;
 }
 
+/**
+ * Email content preview area
+ * Shows a preview of note content before sending
+ * Light gray background distinguishes from input fields
+ *
+ * Features:
+ * - Scrollable area (max-height 200px)
+ * - Pre-wrapped text preserves formatting
+ * - Good line-height for readability
+ * - Smaller font for preview context
+ */
 .email-preview {
     background-color: #f8f9fa;
     border: 1px solid #ddd;
@@ -335,13 +702,32 @@ header h1 {
     color: #34495e;
 }
 
-/* Scrollbar styles */
-.notes-list::-webkit-scrollbar {
-    width: 8px;
-}
+/**
+ * ==================== CUSTOM SCROLLBAR STYLES ====================
+ * Custom styling for webkit browsers (Chrome, Safari, Edge)
+ * Makes scrollbars match the application color scheme
+ */
 
+/**
+ * Notes list scrollbar styling
+ * Applied to the scrollable notes list in sidebar
+ */
+
+/**
+ * Scrollbar track (background)
+ * Light gray background matching sidebar
+ */
 .notes-list::-webkit-scrollbar-track {
     background: #ecf0f1;
+}
+
+/**
+ * Scrollbar thumb (handle)
+ * Darker gray that matches sidebar borders
+ * Rounded corners for polished appearance
+ */
+.notes-list::-webkit-scrollbar {
+    width: 8px;
 }
 
 .notes-list::-webkit-scrollbar-thumb {
@@ -349,6 +735,11 @@ header h1 {
     border-radius: 4px;
 }
 
+/**
+ * Scrollbar thumb hover state
+ * Darkens when user hovers over scrollbar
+ * Provides visual feedback for interaction
+ */
 .notes-list::-webkit-scrollbar-thumb:hover {
     background: #95a5a6;
 }
